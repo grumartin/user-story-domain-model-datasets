@@ -1,0 +1,20 @@
+sequenceDiagram
+    %% SD1 - Manage profile and preferences
+    %% Stories: 1, 2, 3, 5, 6, 7
+    %% Description: A user saves personal and payment details, states preferred genres and event types in a survey, and later edits preferences and personal information or changes the password.
+    actor UP as User (person)
+    participant U as User
+    participant GE as Genre
+    participant ET as EventType
+
+    UP->>U: save name, date of birth, email and address [1]
+    UP->>U: save payment details [2]
+    UP->>U: fill out survey on preferred genres and event types [3]
+    U->>GE: addPreferredBy(user)
+    U->>ET: addPreferredBy(user)
+    opt later, when something changes [5, 6, 7]
+        UP->>U: edit preferences [5]
+        U->>GE: updatePreference(user)
+        UP->>U: edit personal information, e.g. address [7]
+        UP->>U: change password [6]
+    end

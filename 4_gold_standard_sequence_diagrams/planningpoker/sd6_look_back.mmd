@@ -1,0 +1,21 @@
+sequenceDiagram
+    %% SD6 - Look back and re-estimate
+    %% Stories: 13, 35, 39
+    %% Description: A participant scrolls back through earlier rounds; the moderator reopens an earlier item and everyone sees each estimator's prior estimates before estimating again.
+    actor M as Moderator
+    actor P as Participant
+    participant G as Game
+    participant R as Round
+    participant I as Item
+    participant ES as Estimate
+    participant E as Estimator
+
+    P->>G: scroll back through earlier rounds [39]
+    G->>R: getItemsAndEstimates() for each earlier round
+    G-->>P: items and estimates of earlier rounds
+    M->>R: select an item estimated earlier [13]
+    R->>I: reopen()
+    I->>ES: getPriorEstimates()
+    ES->>E: getName()
+    I-->>P: prior estimates per estimator [35]
+    Note over M,E: the item is then estimated again as in SD4

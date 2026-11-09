@@ -1,0 +1,24 @@
+sequenceDiagram
+    %% SD4 - Event page and favorites
+    %% Stories: 10, 11, 49, 50, 51, 52, 53, 54
+    %% Description: An artist maintains a description and links that appear on the event page; a visitor reads the event page; a user favorites the event or artist and finds them in the profile.
+    actor AP as Artist (person)
+    actor VI as Visitor
+    actor UP as User (person)
+    participant U as User
+    participant EV as Event
+    participant VE as Venue
+    participant AR as Artist
+
+    AP->>AR: write description, add links to website, social media and music platforms [50, 51, 52, 54]
+    VI->>EV: open event page
+    EV->>VE: getLocation()
+    EV->>AR: getProfile()
+    EV-->>VI: date, location, artist description and links [11, 49]
+    opt a logged-in user favorites the event or the artist [53]
+        UP->>U: favorite on the event page
+        U->>EV: addFavoriteOf(user)
+        U->>AR: addFavoriteOf(user)
+    end
+    UP->>U: open favorites in the profile [10]
+    U-->>UP: favorited events and artists

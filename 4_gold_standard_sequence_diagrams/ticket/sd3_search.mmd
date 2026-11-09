@@ -1,0 +1,23 @@
+sequenceDiagram
+    %% SD3 - Search for events
+    %% Stories: 19, 28, 29, 30, 31, 32, 33, 34
+    %% Description: A visitor searches for an event by name, narrows the results by venue, genre and price, sorts them by date and opens one.
+    actor VI as Visitor
+    participant EV as Event
+    participant VE as Venue
+    participant GE as Genre
+    participant TI as Ticket
+
+    VI->>EV: search by name [28]
+    Note over VI,EV: search ignores case and punctuation [30]
+    EV->>TI: hasAvailableTickets() for each match [19]
+    EV-->>VI: matching events with available tickets
+    opt narrow down the results [31, 32, 33, 34]
+        VI->>EV: filter by venue, genre and price, sort by date
+        EV->>VE: matches(venue)
+        EV->>GE: matches(genre)
+        EV->>TI: inPriceRange(min, max)
+        EV-->>VI: filtered events, sorted by date
+    end
+    VI->>EV: open a search result [29]
+    EV-->>VI: event page
