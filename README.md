@@ -11,7 +11,8 @@ Curated thesis dataset from **“Leveraging machines to derive domain models fro
 ```text
 1_user_stories/                    # Nine project text files, UTF-8
 2_gold_standard_domain_models/     # Nine Mermaid class diagrams (.mmd) only
-3_visualizations/                  # Rendered SVG diagrams and visual gallery
+3_visualizations/                  # Rendered SVG diagrams and visual galleries
+4_gold_standard_sequence_diagrams/ # Gold sequence diagrams (.mmd) for Planningpoker and Ticket (addition, see below)
 scripts/render_models.py           # Regenerate or validate the diagrams
 scripts/LICENSE                    # MIT license for scripts
 CITATION.cff                      # Original paper as the preferred citation
@@ -33,15 +34,19 @@ Each Mermaid file combines the corresponding class list and association rows fro
 
 Open `.mmd` files in a Mermaid-compatible viewer, or paste their contents into a fenced `mermaid` code block.
 
+## Gold-standard sequence diagrams (addition)
+
+`4_gold_standard_sequence_diagrams/` adds 14 reference UML sequence diagrams, seven each for Planningpoker and Ticket. They were written from the user stories and the gold domain models as a gold standard for evaluating generated sequence diagrams. **They are not part of the original dataset by Bragilovski et al.** Their participants are gold classes, every message between two objects follows a gold association, and each diagram lists the user stories it covers. The [folder README](4_gold_standard_sequence_diagrams/README.md) describes the conventions, coverage and modeling decisions; the [sequence-diagram gallery](3_visualizations/sequence_diagrams/README.md) shows them rendered.
+
 ## Visual representations
 
-[View all nine domain-model diagrams](3_visualizations/README.md). The SVG files can also be opened directly in a browser and enlarged without losing quality. The gallery uses local images and works offline.
+[View all nine domain-model diagrams](3_visualizations/README.md) and the [sequence-diagram gallery](3_visualizations/sequence_diagrams/README.md). The SVG files can also be opened directly in a browser and enlarged without losing quality. The gallery uses local images and works offline.
 
-After changing a Mermaid file, regenerate the SVGs with `python3 scripts/render_models.py` (Python 3, curl, and internet access required). This sends the public dataset diagrams to [Kroki's Mermaid renderer](https://kroki.io/); use `--endpoint URL` for a self-hosted Kroki instance. Renderer updates may change the layout. Run `python3 scripts/render_models.py --check` to check SVG node and association counts against the sources without network access.
+After changing a Mermaid file, regenerate the SVGs with `python3 scripts/render_models.py` (Python 3, curl, and internet access required). This sends the public dataset diagrams to [Kroki's Mermaid renderer](https://kroki.io/); use `--endpoint URL` for a self-hosted Kroki instance. Renderer updates may change the layout. The same command renders the sequence diagrams to `3_visualizations/sequence_diagrams/` and regenerates their gallery from the `%%` header comments and the user stories. Run `python3 scripts/render_models.py --check` to check, without network access, SVG node and association counts, sequence-diagram lifeline and message counts, the sequence diagrams against the gold domain models, and whether the gallery is up to date.
 
 ### Automatic rendering on GitHub
 
-The [Render domain models workflow](.github/workflows/render-models.yml) runs whenever changes to `.mmd` files, the rendering script, or the workflow are pushed to `main`. It regenerates and validates all nine SVGs, then commits changed SVGs back to `main` using GitHub's built-in token. No additional secrets are required. Changes on other branches are rendered after merging into `main`.
+The [Render domain models workflow](.github/workflows/render-models.yml) runs whenever changes to `.mmd` files, the rendering script, or the workflow are pushed to `main`. It regenerates and validates all SVGs and the sequence-diagram gallery, then commits changes back to `main` using GitHub's built-in token. No additional secrets are required. Changes on other branches are rendered after merging into `main`.
 
 You can also start it from **Actions → Render domain models → Run workflow**, selecting `main`. Invalid Mermaid syntax or a rendering/validation error fails the workflow without committing updated SVGs; see the failed run's logs for details. The workflow needs permission to push to `main`; branch protection rules must allow the bot's commits for automatic updates to work.
 
@@ -49,7 +54,7 @@ You can also start it from **Actions → Render domain models → Run workflow**
 
 The dataset, diagrams, and documentation are licensed under the [Creative Commons Attribution 4.0 International license (CC BY 4.0)](LICENSE). Code in `scripts/` is separately licensed under the [MIT License](scripts/LICENSE). The original dataset is by Maxim Bragilovski, Ashley van Can, Arnon Sturm, and Fabiano Dalpiaz and is distributed in their [Zenodo research appendix](https://doi.org/10.5281/zenodo.15223349).
 
-When sharing or adapting this material, credit the original creators, link to the source and [license](https://creativecommons.org/licenses/by/4.0/), and indicate changes. The encoding normalization, Mermaid conversion, and SVG visualizations in this curated repository are described above.
+When sharing or adapting this material, credit the original creators, link to the source and [license](https://creativecommons.org/licenses/by/4.0/), and indicate changes. The encoding normalization, Mermaid conversion, SVG visualizations, and the added sequence diagrams in this curated repository are described above.
 
 ## Citation
 

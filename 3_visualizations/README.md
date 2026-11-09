@@ -1,6 +1,6 @@
 # Domain-model diagrams
 
-[Back to dataset README](../README.md)
+[Back to dataset README](../README.md) · [Sequence-diagram gallery](sequence_diagrams/README.md)
 
 Rendered from the Mermaid gold standards. Click an image to open its SVG and zoom in. Class labels match the Classes workbook; association wording is reconciled using the [documented assumptions](../docs/model-assumptions.md). Nodes marked `associationOnly` have no matching gold-standard class. Every association and wording assumption is documented in `%%` comments in the linked Mermaid source; these comments are hidden in the SVG.
 

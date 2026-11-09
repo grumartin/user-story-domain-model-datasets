@@ -1,0 +1,22 @@
+sequenceDiagram
+    %% SD2 - Discover events on the homepage
+    %% Stories: 4, 46, 47, 48
+    %% Description: A visitor sees popular upcoming events and a calendar view; a logged-in user also gets events recommended from their preferences; clicking an event opens its page.
+    actor VI as Visitor
+    participant U as User
+    participant GE as Genre
+    participant ET as EventType
+    participant EV as Event
+
+    VI->>EV: open homepage
+    EV-->>VI: popular upcoming events and calendar view [46, 47]
+    opt visitor is logged in [4]
+        VI->>U: show recommended events
+        U->>GE: getUpcomingEvents() for each preferred genre
+        U->>ET: getUpcomingEvents() for each preferred event type
+        GE->>EV: findUpcoming(genre)
+        ET->>EV: findUpcoming(eventType)
+        U-->>VI: recommended events
+    end
+    VI->>EV: click an event [48]
+    EV-->>VI: event page

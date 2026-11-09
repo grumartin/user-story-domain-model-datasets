@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - '2_gold_standard_domain_models/*.mmd'
+      - '4_gold_standard_sequence_diagrams/**/*.mmd'
       - 'scripts/render_models.py'
       - '.github/workflows/render-models.yml'
   workflow_dispatch:
@@ -33,12 +34,12 @@ jobs:
 
       - name: Commit updated SVG diagrams
         run: |
-          git add -- '3_visualizations/*.svg'
+          git add -- '3_visualizations/*.svg' '3_visualizations/sequence_diagrams'
           if git diff --cached --quiet; then
             echo "No SVG changes to commit."
             exit 0
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m "Regenerate domain-model SVG diagrams"
+          git commit -m "Regenerate SVG diagrams"
           git push origin HEAD:main

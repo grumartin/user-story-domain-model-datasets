@@ -1,0 +1,19 @@
+sequenceDiagram
+    %% SD7 - View orders and upcoming events
+    %% Stories: 8, 9
+    %% Description: A user looks up previous ticket orders with their tickets and the upcoming events they hold tickets for.
+    actor UP as User (person)
+    participant U as User
+    participant ORD as Order
+    participant TI as Ticket
+    participant EV as Event
+
+    UP->>U: view order history [8]
+    U->>ORD: getOrders()
+    ORD->>TI: getTickets()
+    U-->>UP: previous orders with their tickets
+    UP->>U: view upcoming events [9]
+    U->>ORD: getOrders()
+    ORD->>TI: getTickets()
+    TI->>EV: getEvent()
+    U-->>UP: upcoming events with a bought ticket
