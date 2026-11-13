@@ -1,0 +1,23 @@
+sequenceDiagram
+    %% SD1 - Manage account and settings
+    %% Stories: 1, 2, 3, 4, 5, 6, 7, 8, 9, 44
+    %% Description: A customer creates an account, manages newsletter and push notifications, links a loyalty card and adjusts the display settings.
+    actor CP as Customer (person)
+    participant CU as Customer
+    participant NL as Newsletter
+    participant LC as LoyaltyCard
+
+    %% covers 1
+    CP->>CU: create account
+    %% covers 2, 3
+    CP->>CU: subscribe to or unsubscribe from the newsletter
+    CU->>NL: newsletter subscription
+    %% covers 4, 5
+    CP->>CU: switch push notifications on or off
+    %% covers 44
+    CP->>CU: link loyalty card
+    CU->>LC: loyalty card
+    %% covers 7, 8, 9
+    CP->>CU: change display and language settings
+    %% covers 6
+    CP->>CU: reset password

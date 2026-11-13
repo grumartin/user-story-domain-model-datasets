@@ -1,0 +1,24 @@
+sequenceDiagram
+    %% SD3 - Shop in a store
+    %% Stories: 16, 17, 42, 43
+    %% Description: A customer gets the nearest store recommended, changes the default store, scans products into the shopping list and adds products to the wishlist.
+    actor CP as Customer (person)
+    participant CU as Customer
+    participant ST as Store
+    participant SL as ShoppingList
+    participant PR as Product
+    participant WL as Wishlist
+
+    %% covers 42
+    CP->>CU: get the nearest store recommended
+    CU->>ST: nearest store
+    %% covers 43
+    CP->>CU: change default store
+    %% covers 16
+    CP->>CU: scan products into the shopping list
+    CU->>SL: shopping list
+    SL->>PR: scanned product
+    %% covers 17
+    CP->>CU: add product to the wishlist
+    CU->>WL: wishlist
+    WL->>PR: wished product

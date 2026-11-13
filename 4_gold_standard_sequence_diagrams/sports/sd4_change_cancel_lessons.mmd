@@ -1,0 +1,30 @@
+sequenceDiagram
+    %% SD4 - Change and cancel lessons
+    %% Stories: 20, 33, 34, 35, 36, 37, 38, 39, 40, 41, 55, 56, 57
+    %% Description: Trainers edit and cancel their own lessons, admins any lesson or training session. Customers are notified of a cancellation and confirm that they are aware of it.
+    actor TP as Trainer (person)
+    actor AD as Admin
+    actor CP as Customer (person)
+    participant LE as Lesson
+    participant TS as TrainingSession
+    participant BK as Booking
+    participant CU as Customer
+
+    %% covers 33, 34, 35, 36, 37
+    TP->>LE: edit own lesson
+    %% covers 38
+    AD->>LE: edit any lesson
+    %% covers 20
+    AD->>TS: edit any training session
+    %% covers 39
+    TP->>LE: cancel lesson
+    %% covers 40
+    AD->>LE: cancel lesson
+    LE->>BK: canceled bookings
+    %% covers 41, 55
+    BK->>CU: notify of cancellation
+    %% covers 56
+    CP->>CU: confirm awareness of the cancellation
+    CU->>BK: confirmation
+    %% covers 57
+    AD->>BK: see who has confirmed

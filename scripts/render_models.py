@@ -59,7 +59,7 @@ def check_domain_model(source, data):
     svg = parse_svg(source.name, data)
     text = source.read_text(encoding='utf-8')
     expected = (len(re.findall(r'^\s+class C\d+\[', text, re.M)),
-                len(re.findall(r'^\s+C\d+ -- C\d+\s*$', text, re.M)))
+                len(re.findall(r'^\s+C\d+ (?:--|\.\.) C\d+\s*$', text, re.M)))
     actual = (sum('node' in c and e.tag.endswith('}g') for e, c in classes_of(svg)),
               sum('relation' in c and e.tag.endswith('}path') for e, c in classes_of(svg)))
     if actual != expected:
@@ -82,7 +82,10 @@ def check_sequence_svg(source, data):
 
 
 def norm(term):
+    """Compare class names regardless of case, spacing and singular/plural form."""
     term = re.sub(r'[^a-z]', '', term.lower())
+    if term.endswith('ies'):
+        return term[:-3] + 'y'
     return term[:-1] if term.endswith('s') else term
 
 
@@ -90,7 +93,7 @@ def gold_model(project):
     text = (MODELS / f'{project}.mmd').read_text(encoding='utf-8')
     ids = dict(re.findall(r'class (C\d+)\["([^"]+)"\]', text))
     associations = {frozenset((ids[a], ids[b]))
-                    for a, b in re.findall(r'^\s*(C\d+) -- (C\d+)\s*$', text, re.M)}
+                    for a, b in re.findall(r'^\s*(C\d+) (?:--|\.\.) (C\d+)\s*$', text, re.M)}
     return {norm(c): c for c in ids.values()}, associations
 
 
@@ -112,14 +115,56 @@ def read_sequence(source, classes, associations):
             lifelines[alias] = None
     for sender, receiver in ARROW.findall(text):
         a, b = lifelines.get(sender), lifelines.get(receiver)
+        if sender in lifelines and receiver in lifelines and a is None and b is None:
+            raise ValueError(f'{source}: message {sender} -> {receiver} is between two actors')
         if a and b and a != b and frozenset((a, b)) not in associations:
             raise ValueError(f'{source}: message {sender} -> {receiver} has no gold association {a} -- {b}')
     listed = [int(n) for n in re.findall(r'\d+', stories[1])]
-    tagged = {int(n) for group in re.findall(r'\[([\d, ]+)\]', text) for n in group.split(',')}
+    tagged = {int(n) for group in re.findall(r'^\s*%% covers ([\d, ]+)$', text, re.M) for n in group.split(',')}
     if set(listed) != tagged:
-        raise ValueError(f'{source}: stories in the header {sorted(listed)} differ from the [n] tags {sorted(tagged)}')
+        raise ValueError(f'{source}: stories in the header {sorted(listed)} differ from the '
+                         f'"%% covers" comments {sorted(tagged)}')
+    # Style rules: plain-language messages, no replies, at most one note.
+    labels = re.findall(r'^\s*\w+\s*-{1,2}[>x)]{1,2}\s*\w+\s*:(.*)$', text, re.M)
+    if re.search(r'^\s*\w+\s*--[>x)]', text, re.M):
+        raise ValueError(f'{source}: reply arrows (-->>) are not used in the gold diagrams')
+    if any('(' in label or '[' in label for label in labels):
+        raise ValueError(f'{source}: message labels are plain phrases without operation calls or tags')
+    if len(re.findall(r'^\s*Note ', text, re.M)) > 1:
+        raise ValueError(f'{source}: at most one note per diagram')
+    # Flow rules: unbroken chains, persons act through their own object, few untraced requests.
+    kinds = {alias: kind for kind, alias, _ in LIFELINE.findall(text)}
+    own = {alias: classes.get(norm(label.replace('(person)', '')))
+           for kind, alias, label in LIFELINE.findall(text) if kind == 'actor' and '(person)' in label}
+    direct = set(re.findall(r'^\s*%% direct (\w+)->(\w+):', text, re.M))
+    reached, tagged_next, untraced, used = set(), False, 0, set()
+    for line in text.splitlines():
+        if re.match(r'\s*%% covers ', line):
+            tagged_next = True
+            continue
+        message = ARROW.match(line)
+        if not message:
+            continue
+        sender, receiver = message.groups()
+        a, b = lifelines.get(sender), lifelines.get(receiver)
+        if a and b and a != b:
+            used.add(frozenset((a, b)))
+        if kinds[sender] == 'actor':
+            reached = {receiver}
+            untraced += not tagged_next
+            if own.get(sender) and b and b != own[sender] and frozenset((own[sender], b)) in associations                     and (sender, receiver) not in direct:
+                raise ValueError(f'{source}: {sender} -> {receiver} skips the own object {own[sender]}; '
+                                 f'route through it or add a "%% direct {sender}->{receiver}: reason" comment')
+        else:
+            if sender not in reached:
+                raise ValueError(f'{source}: message {sender} -> {receiver} does not continue a chain; '
+                                 f'{sender} was not reached since the last actor request')
+            reached.add(receiver)
+        tagged_next = False
+    if untraced > 1:
+        raise ValueError(f'{source}: more than one actor message without a "%% covers" comment')
     return {'id': head[1], 'title': head[2], 'stories': listed, 'description': description[1],
-            'source': source, 'messages': len(ARROW.findall(text))}
+            'source': source, 'messages': len(ARROW.findall(text)), 'associations': used}
 
 
 def story_texts(project):
@@ -137,15 +182,18 @@ def ranges(numbers):
     return ', '.join(out)
 
 
-def gallery(projects):
+def gallery(projects, totals):
     out = ['# Sequence-diagram gallery', '',
            '[Back to dataset README](../../README.md) · '
            '[Conventions and coverage](../../4_gold_standard_sequence_diagrams/README.md)', '',
            'Gold-standard sequence diagrams, rendered from the Mermaid sources in '
            '`4_gold_standard_sequence_diagrams/`. They are an addition to the original dataset, written for a '
            'master thesis on validating LLM-generated domain models, and are not part of the work of '
-           'Bragilovski et al. Click an image to open its SVG and zoom in. `[n]` in a diagram is the line '
-           'number of the user story it covers.', '']
+           'Bragilovski et al. Click an image to open its SVG and zoom in. Each diagram lists the user stories '
+           'it covers, numbered by their line in the story file.', '',
+           'Projects: ' + ' · '.join(
+               f'[{project_name(p)}](#{re.sub(r"[^a-z0-9 -]", "", project_name(p).lower()).replace(" ", "-")})'
+               for p in projects), '']
     for project, diagrams in projects.items():
         stories = story_texts(project)
         covered = {n for d in diagrams for n in d['stories']}
@@ -153,7 +201,9 @@ def gallery(projects):
         out += [f'## {name}', '',
                 f'{len(diagrams)} diagrams, {sum(d["messages"] for d in diagrams)} messages, '
                 f'{len(covered)} of {len(stories)} user stories covered '
-                f'(not covered: {ranges(set(stories) - covered)}). '
+                f'(not covered: {ranges(set(stories) - covered)}), '
+                f'{len(set().union(*(d["associations"] for d in diagrams)))} of {totals[project]} '
+                f'gold associations used. '
                 f'[User stories](../../1_user_stories/{project}.txt) · '
                 f'[Domain model](../{project}.svg)', '']
         for d in diagrams:
@@ -194,18 +244,23 @@ def main():
         print(f'{source.name}: {check_domain_model(source, data)}', flush=True)
         rendered.append((destination, data))
 
-    projects = {}
+    projects, totals = {}, {}
     for folder in sorted(p for p in SEQUENCES.glob('*') if p.is_dir()):
         classes, associations = gold_model(folder.name)
         diagrams = [read_sequence(s, classes, associations) for s in sorted(folder.glob('*.mmd'))]
         projects[folder.name] = diagrams
+        totals[folder.name] = len(associations)
+        unused = associations - set().union(*(d['associations'] for d in diagrams))
+        print(f'{folder.name}: {len(associations) - len(unused)} of {len(associations)} gold associations used'
+              + (f'; unused: {", ".join(sorted(" -- ".join(sorted(u)) for u in unused))}' if unused else ''),
+              flush=True)
         for d in diagrams:
             source = d['source']
             destination = SEQ_VISUALS / folder.name / f'{source.stem}.svg'
             data = destination.read_bytes() if args.check else render(source, args.endpoint)
             print(f'{folder.name}/{source.name}: {check_sequence_svg(source, data)}', flush=True)
             rendered.append((destination, data))
-    page = gallery(projects).encode('utf-8')
+    page = gallery(projects, totals).encode('utf-8')
     gallery_path = SEQ_VISUALS / 'README.md'
 
     if args.check:

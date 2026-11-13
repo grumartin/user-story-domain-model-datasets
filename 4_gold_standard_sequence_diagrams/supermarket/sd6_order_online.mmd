@@ -1,0 +1,22 @@
+sequenceDiagram
+    %% SD6 - Order groceries online
+    %% Stories: 32, 37, 38, 39, 40
+    %% Description: A customer purchases products online, reuses previous orders from the order history and pays digitally.
+    actor CP as Customer (person)
+    participant CU as Customer
+    participant OD as Order
+    participant PR as Product
+    participant PY as Payment
+
+    %% covers 32
+    CP->>CU: purchase products online
+    CU->>OD: new order
+    OD->>PR: ordered products
+    %% covers 37
+    CP->>CU: view order history
+    %% covers 38, 39
+    CP->>CU: reorder or reuse products of a previous order
+    %% covers 40
+    CP->>CU: pay digitally
+    CU->>OD: order to pay
+    OD->>PY: payment

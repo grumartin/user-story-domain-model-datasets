@@ -1,0 +1,22 @@
+sequenceDiagram
+    %% SD6 - Review sales and balances
+    %% Stories: 39, 40, 41, 42, 43, 44, 45
+    %% Description: The restaurant owner views VAT, type and price per order and the sold products, searches for an order, records tips and checks cashier balances.
+    actor OW as Restaurant owner
+    participant OD as Order
+    participant PR as Product
+    participant PA as Payment
+    participant CH as Cashier
+
+    %% covers 39, 41, 42
+    OW->>OD: view sales figures per order
+    %% covers 40
+    OW->>OD: view sold products
+    OD->>PR: sold products
+    %% covers 43
+    OW->>OD: search for a specific order
+    %% covers 44
+    OW->>PA: record tips of the day
+    %% covers 45
+    OW->>CH: check cashier balance
+    CH->>PA: payments taken

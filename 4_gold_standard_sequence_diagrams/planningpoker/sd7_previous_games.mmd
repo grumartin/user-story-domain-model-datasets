@@ -1,24 +1,19 @@
 sequenceDiagram
     %% SD7 - Manage previous games
     %% Stories: 16, 17, 18, 19, 20
-    %% Description: The moderator finds a previous game, views its transcript, can export it as HTML or CSV, and can delete the game with its items and estimates.
+    %% Description: The moderator browses previous games, views and exports a transcript, and deletes a game.
     actor M as Moderator
     participant G as Game
     participant R as Round
     participant I as Item
 
-    M->>G: browse previous games [16]
-    G-->>M: list of games
-    M->>G: open transcript of a game [17]
-    G->>R: getItems() for each round
-    R->>I: getAcceptedEstimate() for each item
-    G-->>M: transcript of items and estimates
-    opt export the transcript [18, 19]
-        M->>G: export as HTML or CSV
-        G-->>M: transcript file
-    end
-    opt delete the game [20]
-        M->>G: delete game
-        G->>R: delete() for each round
-        R->>I: delete() for each item, with its estimates
-    end
+    %% covers 16
+    M->>G: browse previous games
+    %% covers 17
+    M->>G: view transcript
+    G->>R: rounds
+    R->>I: items and estimates
+    %% covers 18, 19
+    M->>G: export transcript
+    %% covers 20
+    M->>G: delete game

@@ -1,0 +1,28 @@
+sequenceDiagram
+    %% SD1 - Take an order
+    %% Stories: 23, 27, 29, 30, 32, 33, 34, 35, 38
+    %% Description: The cashier enters the products, special requests, order type and customer details, activates a coupon, and the customer reviews the order.
+    actor CS as Cashier (person)
+    actor CUP as Customer (person)
+    participant OD as Order
+    participant PR as Product
+    participant RQ as Request
+    participant CU as Customer
+    participant CO as Coupon
+
+    CS->>OD: enter order
+    OD->>PR: ordered products
+    %% covers 35
+    CS->>PR: add special request
+    PR->>RQ: special request
+    %% covers 29, 30, 32, 33, 34
+    CS->>OD: add order type and customer details
+    OD->>CU: customer
+    %% covers 38
+    CS->>OD: activate coupon
+    OD->>CO: coupon
+    %% covers 23
+    CUP->>CU: review the order on the screen
+    CU->>OD: order
+    %% covers 27
+    CS->>OD: change order

@@ -1,0 +1,37 @@
+sequenceDiagram
+    %% SD7 - View student information and statistics
+    %% Stories: 4, 15, 17, 45, 52, 61
+    %% Description: Teachers, guardians and students view a student's information, adult students control what guardians see, and an administrator views statistics.
+    actor TP as Teacher (person)
+    actor GP as Guardian (person)
+    actor SP as Student (person)
+    actor AP as Administrator (person)
+    participant TE as Teacher
+    participant CL as Class
+    participant ST as Student
+    participant SU as Submission
+    participant GR as Grade
+    participant BE as Behavior
+    participant DA as DisciplinaryAction
+    participant GU as Guardian
+
+    %% covers 45
+    TP->>TE: view the record of a class's student
+    TE->>CL: class
+    CL->>ST: student
+    ST->>SU: submissions
+    SU->>GR: grades
+    ST->>BE: behaviour
+    ST->>DA: disciplinary actions
+    %% covers 4
+    GP->>GU: view information about the children
+    GU->>ST: child
+    GU->>BE: behaviour of the child
+    %% covers 15
+    SP->>ST: view personal information
+    %% covers 17
+    SP->>ST: change data shared with guardians
+    ST->>GU: sharing preferences
+    %% covers 52, 61
+    AP->>CL: view statistics
+    CL->>ST: students

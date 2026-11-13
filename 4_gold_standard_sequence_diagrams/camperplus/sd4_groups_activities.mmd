@@ -1,0 +1,30 @@
+sequenceDiagram
+    %% SD4 - Organize groups and activities
+    %% Stories: 6, 13, 25, 26, 27, 28, 29, 34, 35
+    %% Description: The camp administrator creates groups, schedules activities for a group in a facility, changes scheduled activities, tracks the usage of the camp facilities and views the groups of the camp with their events.
+    actor AD as Camp administrator
+    participant GR as Group
+    participant CA as Camper
+    participant SC as Schedule
+    participant AC as Activity
+    participant FA as Facility
+    participant CM as Camp
+
+    %% covers 25
+    AD->>GR: create group and add campers
+    GR->>CA: campers of the group
+    %% covers 34
+    AD->>GR: modify group information
+    %% covers 6, 27
+    AD->>GR: schedule activity for the group
+    GR->>SC: group schedule
+    SC->>AC: scheduled activity
+    AC->>FA: facility used
+    %% covers 13
+    AD->>CM: track facility usage
+    CM->>FA: facilities
+    %% covers 28, 29
+    AD->>SC: modify or delete scheduled activity
+    %% covers 26, 35
+    AD->>CM: view groups and their events
+    CM->>GR: groups

@@ -1,0 +1,21 @@
+sequenceDiagram
+    %% SD5 - Give feedback and complain
+    %% Stories: 17, 39
+    %% Description: A user contacts the administrators with feedback or a complaint, and an admin reads them.
+    actor UP as User (person)
+    actor AD as Admin
+    participant U as User
+    participant FB as Feedback
+    participant CM as Complaint
+
+    %% covers 39
+    UP->>U: contact the administrators
+    alt feedback
+        U->>FB: feedback
+    else complaint
+        U->>CM: complaint
+    end
+    %% covers 17
+    AD->>FB: read feedback
+    %% covers 17
+    AD->>CM: read complaints

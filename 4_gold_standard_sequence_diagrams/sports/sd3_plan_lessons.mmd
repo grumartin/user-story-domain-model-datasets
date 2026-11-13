@@ -1,0 +1,29 @@
+sequenceDiagram
+    %% SD3 - Plan lessons
+    %% Stories: 25, 26, 27, 28, 29, 30, 31, 32, 47, 49, 60
+    %% Description: An admin adds and removes trainers. A trainer checks free rooms, adds a lesson with its details to the schedule, and views the own schedule and training sessions.
+    actor AD as Admin
+    actor TP as Trainer (person)
+    participant TR as Trainer
+    participant RM as Room
+    participant SC as Schedule
+    participant LE as Lesson
+    participant TS as TrainingSession
+
+    %% covers 47, 49
+    AD->>TR: add or remove trainer
+    %% covers 25
+    TP->>RM: see free rooms at a timeslot
+    %% covers 26
+    TP->>TR: add lesson to the schedule
+    TR->>SC: trainer's schedule
+    SC->>LE: new lesson
+    %% covers 27, 28, 30, 31
+    TP->>LE: set lesson details
+    %% covers 29
+    TP->>LE: set room
+    LE->>RM: room of the lesson
+    %% covers 32, 60
+    TP->>TR: view schedule and training sessions
+    TR->>SC: trainer's schedule
+    SC->>TS: training sessions

@@ -1,29 +1,23 @@
 sequenceDiagram
     %% SD3 - Prepare and maintain the items
     %% Stories: 3, 4, 6, 7, 8, 14, 15, 31
-    %% Description: The moderator starts a round with a first item, can import more items from a spreadsheet, and adds, edits or deletes items during play; everyone sees the round's items.
+    %% Description: The moderator starts a round with an item, imports further items and adds, edits or deletes items. Moderator and estimators see the items of the round.
     actor M as Moderator
     actor EP as Estimator (person)
     participant G as Game
     participant R as Round
     participant I as Item
 
-    M->>G: start round with a first item [3]
-    G->>R: create()
-    R->>I: create(text)
-    opt import or paste items from a spreadsheet [14, 15]
-        M->>R: import items
-        R->>I: create(text) for each row
-    end
-    R-->>M: all items of the round [4]
-    R-->>EP: all items of the round [31]
-    alt add an item during play [6]
-        M->>R: add item
-        R->>I: create(text)
-    else edit an item [7]
-        M->>R: edit item text
-        R->>I: setText(text)
-    else delete an item [8]
-        M->>R: delete item
-        R->>I: delete()
-    end
+    %% covers 3
+    M->>G: start round with an item
+    G->>R: new round
+    R->>I: item
+    %% covers 14, 15
+    M->>R: import items
+    %% covers 6, 7, 8
+    M->>R: add, edit or delete an item
+    R->>I: changed items
+    %% covers 4
+    M->>R: view all items
+    %% covers 31
+    EP->>R: view all items

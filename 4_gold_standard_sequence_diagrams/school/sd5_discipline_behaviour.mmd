@@ -1,0 +1,21 @@
+sequenceDiagram
+    %% SD5 - Record discipline and behaviour
+    %% Stories: 33, 35, 36
+    %% Description: A teacher records disciplinary actions and behaviour marks for a student, and the mentor is notified when a student is sent out.
+    actor TP as Teacher (person)
+    participant TE as Teacher
+    participant DA as DisciplinaryAction
+    participant ST as Student
+    participant MN as Mentor
+    participant BE as Behavior
+
+    %% covers 35
+    TP->>TE: record disciplinary action
+    TE->>DA: disciplinary action
+    DA->>ST: student concerned
+    %% covers 33
+    ST->>MN: notify mentor when sent out
+    %% covers 36
+    TP->>TE: record behaviour for the period
+    TE->>BE: behaviour mark
+    BE->>ST: student concerned

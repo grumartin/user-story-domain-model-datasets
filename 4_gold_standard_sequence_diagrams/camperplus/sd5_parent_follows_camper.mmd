@@ -1,0 +1,24 @@
+sequenceDiagram
+    %% SD5 - Follow a camper at camp
+    %% Stories: 37, 40, 43, 44, 48
+    %% Description: A parent follows the child's schedule and assigned counselors, checks the payments and shares photos.
+    actor PA as Parent
+    participant GD as Guardian
+    participant CA as Camper
+    participant GR as Group
+    participant SC as Schedule
+    participant CS as Counselor
+    participant PY as Payment
+    participant PH as Photo
+
+    %% covers 37, 40, 48
+    PA->>GD: follow schedule and counselors of the child
+    GD->>CA: child
+    CA->>GR: group
+    GR->>SC: group schedule
+    GR->>CS: counselors of the group
+    %% covers 43, 44
+    PA->>GD: check payments and share photos
+    GD->>CA: child
+    CA->>PY: payments
+    CA->>PH: photos

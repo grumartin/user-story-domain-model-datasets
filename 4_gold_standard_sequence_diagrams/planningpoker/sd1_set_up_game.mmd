@@ -1,14 +1,15 @@
 sequenceDiagram
     %% SD1 - Set up a game
     %% Stories: 1, 2, 27, 28
-    %% Description: The moderator creates a game, chooses the card deck and gets the invitation URL to share with the estimators.
+    %% Description: The moderator creates a game, chooses the card deck and invites the estimators.
     actor M as Moderator
     participant G as Game
     participant C as Card
 
-    M->>G: create game with name and optional description [1]
-    M->>G: choose deck: modified Fibonacci or powers of 2 [27]
-    G->>C: createCards(deck)
-    M->>G: ask for the invitation URL [2]
-    G-->>M: invitation URL
-    Note over M,G: the moderator shares the URL with up to 15 estimators [28]
+    %% covers 1
+    M->>G: create game
+    %% covers 27
+    M->>G: choose card deck
+    G->>C: cards of the deck
+    %% covers 2, 28
+    M->>G: invite estimators

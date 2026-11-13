@@ -1,0 +1,12 @@
+sequenceDiagram
+    %% SD3 - Follow safe disposal events
+    %% Stories: 8, 11
+    %% Description: A user views the safe disposal events in the area and leaves an email address to be notified of new events.
+    actor UP as User (person)
+    participant SE as SafeDisposalEvent
+    participant U as User
+
+    %% covers 11
+    UP->>SE: view safe disposal events nearby
+    %% covers 8
+    UP->>U: give email for event notifications

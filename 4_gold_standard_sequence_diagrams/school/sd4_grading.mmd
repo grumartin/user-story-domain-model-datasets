@@ -1,0 +1,25 @@
+sequenceDiagram
+    %% SD4 - Review and grade submissions
+    %% Stories: 25, 37, 39, 40, 41
+    %% Description: A teacher sees a student's answers and progress in a module, grades submissions automatically or by hand, and sees last year's average grade.
+    actor TP as Teacher (person)
+    participant DM as DigitalLearningModule
+    participant QU as Question
+    participant AN as Answer
+    participant SU as Submission
+    participant GR as Grade
+    participant TE as Teacher
+    participant CL as Class
+    participant ST as Student
+
+    %% covers 39, 41
+    TP->>DM: see a student's answers and progress
+    DM->>QU: questions
+    QU->>AN: answers
+    %% covers 25, 37
+    TP->>SU: grade automatically or by hand
+    SU->>GR: grade
+    %% covers 40
+    TP->>TE: see last year's average grade
+    TE->>CL: classes
+    CL->>ST: students

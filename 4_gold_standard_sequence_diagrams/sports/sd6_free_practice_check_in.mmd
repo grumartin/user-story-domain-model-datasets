@@ -1,0 +1,24 @@
+sequenceDiagram
+    %% SD6 - Use the free practice area and check in
+    %% Stories: 23, 24, 61, 62, 63
+    %% Description: A customer books a spot in the free practice area and sees the booked spots per timeslot. At check-in an admin sees the customer's subscription and bookings.
+    %% direct CP->BK: booked spots of all customers, not the customer's own bookings
+    actor CP as Customer (person)
+    actor AD as Admin
+    participant CU as Customer
+    participant BK as Booking
+    participant SP as Spot
+    participant SB as Subscription
+
+    %% covers 23
+    CP->>CU: book a spot in the free practice area
+    CU->>BK: booking
+    BK->>SP: booked spot
+    %% covers 24
+    CP->>BK: see booked spots per timeslot
+    %% covers 61
+    CP->>CU: check in
+    %% covers 62, 63
+    AD->>CU: check subscription and bookings at check-in
+    CU->>SB: subscription
+    CU->>BK: bookings

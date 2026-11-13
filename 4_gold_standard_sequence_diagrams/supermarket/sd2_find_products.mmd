@@ -1,0 +1,26 @@
+sequenceDiagram
+    %% SD2 - Find products and check stock
+    %% Stories: 18, 19, 20, 21, 23, 24, 25, 26, 27, 28, 29, 41
+    %% Description: A customer searches, filters and sorts products, reads product information, and checks stock, location and availability in stores.
+    %% direct CP->ST: searching products and stock is not about the customer's own data
+    actor CP as Customer (person)
+    participant ST as Store
+    participant PR as Product
+
+    %% covers 18
+    CP->>ST: search for a product
+    ST->>PR: products
+    %% covers 19, 20, 21
+    CP->>ST: filter and sort the results
+    %% covers 23, 24
+    CP->>PR: scan a product for its information
+    %% covers 25, 28
+    CP->>ST: check stock and quantity
+    %% covers 41
+    CP->>ST: find product location in the store
+    opt product is sold out
+        %% covers 27, 29
+        CP->>ST: see restock date and other stores
+        %% covers 26
+        CP->>PR: ask to be notified when back in stock
+    end

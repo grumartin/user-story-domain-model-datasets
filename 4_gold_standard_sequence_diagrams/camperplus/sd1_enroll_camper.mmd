@@ -1,0 +1,22 @@
+sequenceDiagram
+    %% SD1 - Enroll a camper
+    %% Stories: 15, 16, 24, 39, 46, 47
+    %% Description: A parent creates an account or is added by the camp administrator, enrolls a camper and follows the enrollment. The administrator stores emergency and guardian information.
+    actor PA as Parent
+    actor AD as Camp administrator
+    participant GD as Guardian
+    participant CA as Camper
+    participant CM as Camp
+
+    %% covers 39
+    PA->>GD: create account
+    %% covers 24
+    AD->>GD: add parent
+    %% covers 46
+    PA->>GD: enroll camper
+    GD->>CA: camper
+    CA->>CM: camp
+    %% covers 15, 16
+    AD->>CA: store emergency and guardian information
+    %% covers 47
+    PA->>GD: view and edit enrolled campers

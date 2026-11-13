@@ -1,0 +1,30 @@
+sequenceDiagram
+    %% SD1 - Pay salaries and send statements
+    %% Stories: 1, 2, 3, 4, 6, 15, 16, 44, 45
+    %% Description: The manager offers weekly or monthly payments and sends salary statements. Work hours are verified, the salary is paid, and the employee is notified.
+    actor MP as Manager (person)
+    actor EP as Employee (person)
+    participant MG as Manager
+    participant E as Employee
+    participant WH as WorkingHours
+    participant SS as SalaryStatement
+    participant PY as Payment
+
+    %% covers 3
+    MP->>MG: enable weekly or monthly payments
+    MG->>E: payment options
+    %% covers 44
+    EP->>E: choose payment interval
+    %% covers 2
+    MP->>MG: send salary statements
+    MG->>E: salary statements to send
+    %% covers 15, 16
+    E->>WH: worked hours
+    %% covers 1
+    E->>SS: salary statement
+    %% covers 4
+    SS->>PY: salary payment
+    %% covers 6
+    PY->>E: notify of handled payment
+    %% covers 45
+    EP->>E: view annual statements

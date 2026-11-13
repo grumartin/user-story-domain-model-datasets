@@ -1,0 +1,25 @@
+sequenceDiagram
+    %% SD2 - Pay for an order
+    %% Stories: 6, 7, 24, 25, 26, 28, 31, 36, 37
+    %% Description: The cashier offers payment methods and a tip, the order is paid, tickets go to the customer and the kitchen, and the kitchen is notified of the new order and of later changes.
+    actor CS as Cashier (person)
+    actor CUP as Customer (person)
+    actor KE as Kitchen employee
+    participant OD as Order
+    participant PA as Payment
+
+    %% covers 36, 37
+    CS->>OD: offer payment methods and add tip
+    OD->>PA: payment
+    %% covers 24
+    CUP->>PA: request payment confirmation
+    %% covers 25, 26
+    CS->>OD: print ticket for the customer
+    %% covers 31
+    CS->>OD: send digital ticket to the kitchen
+    %% covers 6
+    OD->>KE: notify of new order
+    %% covers 28
+    CS->>OD: change order after processing
+    %% covers 7
+    OD->>KE: notify kitchen of the change

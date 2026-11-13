@@ -1,0 +1,23 @@
+sequenceDiagram
+    %% SD4 - Receive discounts and suggestions
+    %% Stories: 10, 11, 12, 22, 46
+    %% Description: An employee edits product discounts, and a customer is notified of a personal discount on frequently bought products. The customer turns on sale notifications and receives product suggestions.
+    actor EM as Employee
+    actor CP as Customer (person)
+    participant PR as Product
+    participant PD as PersonalDiscount
+    participant CU as Customer
+    participant OD as Order
+
+    %% covers 46
+    EM->>PR: edit product discount
+    %% covers 11
+    PR->>PD: discount on frequently bought products
+    %% covers 12
+    PD->>CU: notify of personal discount
+    %% covers 22
+    CP->>CU: turn on sale notifications
+    %% covers 10
+    CP->>CU: get product suggestions
+    CU->>OD: previous orders
+    OD->>PR: bought products

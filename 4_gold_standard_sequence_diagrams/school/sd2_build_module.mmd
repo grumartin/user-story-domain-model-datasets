@@ -1,0 +1,29 @@
+sequenceDiagram
+    %% SD2 - Build a digital learning module
+    %% Stories: 20, 21, 22, 23, 24, 26, 29, 30, 31, 42, 43
+    %% Description: A teacher creates a module with content and question pages, answers and a submission element, edits pages, and assigns the module to a class with dates.
+    actor TP as Teacher (person)
+    participant DM as DigitalLearningModule
+    participant MA as Material
+    participant QU as Question
+    participant AN as Answer
+    participant CL as Class
+
+    %% covers 26
+    TP->>DM: create module with pages
+    %% covers 20, 21
+    TP->>DM: add content page
+    DM->>MA: page material
+    %% covers 22
+    TP->>DM: add question page
+    DM->>QU: question
+    %% covers 31
+    TP->>QU: add answer
+    QU->>AN: answer
+    %% covers 30
+    TP->>DM: add submission element
+    %% covers 29
+    TP->>DM: edit a page
+    %% covers 23, 24, 42, 43
+    TP->>DM: assign module to a class
+    DM->>CL: assigned class

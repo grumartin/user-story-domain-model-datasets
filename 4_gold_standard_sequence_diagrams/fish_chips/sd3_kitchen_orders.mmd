@@ -1,0 +1,16 @@
+sequenceDiagram
+    %% SD3 - Prepare orders in the kitchen
+    %% Stories: 1, 2, 3, 4, 5
+    %% Description: A kitchen employee sees all orders with their status, and sees each order's number, products and special requests.
+    actor KE as Kitchen employee
+    participant OD as Order
+    participant PR as Product
+    participant RQ as Request
+
+    %% covers 1, 2
+    KE->>OD: view all orders with status
+    %% covers 3, 5
+    KE->>OD: view order number with its products
+    OD->>PR: products of the order
+    %% covers 4
+    PR->>RQ: special requests

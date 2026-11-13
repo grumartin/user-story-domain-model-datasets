@@ -1,0 +1,20 @@
+sequenceDiagram
+    %% SD2 - Maintain camper and parent records
+    %% Stories: 1, 2, 3, 30, 31, 32, 33
+    %% Description: The camp administrator adds, modifies and removes campers, keeps records from previous years, and modifies or deletes parents.
+    actor AD as Camp administrator
+    participant CA as Camper
+    participant CM as Camp
+    participant GD as Guardian
+
+    %% covers 1
+    AD->>CA: add camper
+    %% covers 30
+    AD->>CA: modify camper information
+    %% covers 2, 31
+    AD->>CA: remove camper
+    %% covers 3
+    AD->>CM: keep camper records of previous years
+    CM->>CA: past campers
+    %% covers 32, 33
+    AD->>GD: modify or delete parent
