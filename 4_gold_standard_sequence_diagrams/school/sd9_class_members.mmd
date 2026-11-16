@@ -1,0 +1,18 @@
+sequenceDiagram
+    %% SD9 - See who is in a class
+    %% Stories: 16, 46
+    %% Description: A teacher sees who is in a class on the timetable, and a student sees the contact information of classmates.
+    actor TP as Teacher (person)
+    actor SP as Student (person)
+    participant TE as Teacher
+    participant CL as Class
+    participant ST as Student
+
+    %% covers 46
+    TP->>TE: view who is in a class
+    TE->>CL: class
+    CL->>ST: students
+    %% covers 16
+    SP->>ST: view contact information of classmates
+    ST->>CL: classes
+    CL->>ST: classmates

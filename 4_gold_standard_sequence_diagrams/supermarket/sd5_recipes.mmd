@@ -1,0 +1,23 @@
+sequenceDiagram
+    %% SD5 - Get recipe ideas
+    %% Stories: 14, 30, 31, 45
+    %% Description: An employee adds recipes. A customer browses recipe ideas, gets recipes for liked products and sees the products a recipe uses.
+    actor EM as Employee
+    actor CP as Customer (person)
+    participant RE as Recipe
+    participant PR as Product
+    participant CU as Customer
+    participant WL as Wishlist
+
+    %% covers 45
+    EM->>RE: add new recipe
+    RE->>PR: products used
+    %% covers 30
+    CP->>RE: browse recipe ideas
+    %% covers 14
+    CP->>CU: get recipes for liked products
+    CU->>WL: liked products
+    WL->>PR: products
+    PR->>RE: matching recipes
+    %% covers 31
+    CP->>RE: see products used in a recipe

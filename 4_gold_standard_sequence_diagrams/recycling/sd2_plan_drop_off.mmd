@@ -1,0 +1,15 @@
+sequenceDiagram
+    %% SD2 - Plan a drop-off
+    %% Stories: 5, 12, 37
+    %% Description: A user uploads a weekly schedule, gets fitting recycling centers recommended and chooses a flexible pick-up time.
+    actor UP as User (person)
+    participant U as User
+    participant SC as Schedule
+    participant RF as RecyclingFacility
+
+    %% covers 37
+    UP->>U: upload weekly schedule
+    U->>SC: availability
+    SC->>RF: fitting facilities
+    %% covers 5, 12
+    UP->>U: choose a flexible pick-up time

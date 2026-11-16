@@ -1,0 +1,25 @@
+sequenceDiagram
+    %% SD7 - Deliver the groceries
+    %% Stories: 13, 33, 34, 35, 36, 47, 48, 49, 50, 51
+    %% Description: A customer has groceries delivered at a chosen time, by express or by subscription. An employee confirms the delivery time and informs the customer about problems.
+    actor CP as Customer (person)
+    actor EM as Employee
+    participant CU as Customer
+    participant DL as Delivery
+    participant OD as Order
+
+    %% covers 13
+    CP->>CU: subscribe to the delivery service
+    %% covers 33
+    CP->>CU: have groceries delivered
+    %% covers 34, 35, 36
+    CP->>CU: choose date and time slot or express delivery
+    CU->>DL: delivery
+    DL->>OD: order to deliver
+    %% covers 47
+    EM->>DL: confirm delivery time
+    %% covers 48, 49
+    EM->>DL: report unavailable products or a delay
+    %% covers 50, 51
+    EM->>DL: cancel and offer a new delivery time
+    DL->>CU: notify of changes

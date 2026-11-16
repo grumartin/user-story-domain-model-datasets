@@ -1,22 +1,24 @@
 sequenceDiagram
     %% SD4 - Estimate an item
-    %% Stories: 5, 30, 32, 34, 40, 41
-    %% Description: The moderator selects an item; each estimator plays a card, which they can change until the estimates are shown.
+    %% Stories: 5, 30, 32, 34, 41
+    %% Description: The moderator selects an item, the estimators play a card and can change it until the estimates are shown. Everyone sees who has already estimated.
     actor M as Moderator
     actor EP as Estimator (person)
+    actor PT as Participant
     participant R as Round
     participant I as Item
     participant E as Estimator
     participant ES as Estimate
 
-    M->>R: select item to estimate [5]
-    R->>I: setCurrent()
-    R-->>EP: item and cards, always in the same order [30, 40]
-    EP->>E: play card
-    E->>ES: create(value)
-    ES->>I: addTo(item)
-    Note over M,ES: everyone sees that this estimator has played, not the value [32]
-    opt change the card before the estimates are shown [34, 41]
-        EP->>E: play another card
-        E->>ES: setValue(value)
-    end
+    %% covers 5
+    M->>R: select item to estimate
+    %% covers 30
+    R->>I: item to estimate
+    EP->>E: play a card
+    E->>ES: estimate
+    ES->>I: estimate for the item
+    %% covers 32
+    PT->>R: see who has already estimated
+    %% covers 34, 41
+    EP->>E: change card before the reveal
+    E->>ES: changed estimate

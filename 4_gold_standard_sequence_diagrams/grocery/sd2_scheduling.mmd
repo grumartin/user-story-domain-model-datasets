@@ -1,0 +1,27 @@
+sequenceDiagram
+    %% SD2 - Create and publish the schedule
+    %% Stories: 7, 8, 9, 10, 12, 13, 14
+    %% Description: Employees state preferred working hours. The manager generates, adjusts and authorizes the schedule, and employees are notified and view it.
+    actor EP as Employee (person)
+    actor MP as Manager (person)
+    participant E as Employee
+    participant WH as WorkingHours
+    participant SC as Schedule
+
+    %% covers 7
+    EP->>E: state preferred working hours
+    E->>WH: preferred hours
+    %% covers 8
+    MP->>SC: generate schedule
+    SC->>E: preferred hours of employees
+    %% covers 9
+    MP->>SC: adjust schedule manually
+    %% covers 10
+    MP->>SC: authorize schedule
+    %% covers 12
+    SC->>E: notify of new schedule
+    %% covers 13
+    EP->>E: view schedule
+    E->>SC: schedule
+    %% covers 14
+    MP->>SC: view schedule

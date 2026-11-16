@@ -1,25 +1,19 @@
 sequenceDiagram
     %% SD5 - Reveal and accept the estimates
     %% Stories: 9, 10, 11, 12, 33, 36
-    %% Description: The estimates are shown to everyone at once, early if the moderator decides so; the moderator then accepts the average or the agreed estimate.
+    %% Description: The estimates are shown to everyone at the same time, and the moderator accepts the average or the agreed estimate.
     actor M as Moderator
-    actor EP as Estimator (person)
+    actor PT as Participant
     participant R as Round
     participant I as Item
     participant ES as Estimate
 
-    opt not all estimators have played yet [9]
-        M->>R: show estimates now
-    end
-    R->>I: revealEstimates()
-    I->>ES: reveal()
-    I-->>M: all estimates at once, with who gave them [33, 36]
-    I-->>EP: all estimates at once, with who gave them [33, 36]
-    Note over M,ES: if all cards are equal, the estimate field is pre-filled [11]
-    alt accept the average [10]
-        M->>R: accept average
-        R->>I: acceptAverage()
-    else enter the agreed estimate [12]
-        M->>R: accept agreed estimate
-        R->>I: accept(value)
-    end
+    %% covers 9
+    M->>R: show the estimates
+    R->>I: estimates to reveal
+    I->>ES: all estimates at once
+    %% covers 33, 36
+    PT->>I: see all estimates and who gave them
+    %% covers 10, 11, 12
+    M->>R: accept the average or the agreed estimate
+    R->>I: accepted estimate

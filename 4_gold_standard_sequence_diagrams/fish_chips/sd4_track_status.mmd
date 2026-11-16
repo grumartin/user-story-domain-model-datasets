@@ -1,0 +1,20 @@
+sequenceDiagram
+    %% SD4 - Track the status of orders
+    %% Stories: 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22
+    %% Description: The ticket master views orders by status, selects an order to see product statuses and order type, labels products with a status and deletes delivered orders.
+    actor TM as Ticket master
+    participant OD as Order
+    participant PR as Product
+
+    %% covers 12, 13, 14, 15, 16
+    TM->>OD: view orders by status
+    %% covers 21
+    TM->>OD: select an order
+    %% covers 17, 18
+    OD->>PR: product statuses
+    %% covers 19
+    TM->>OD: see the order type
+    %% covers 8, 9, 10, 11
+    TM->>PR: set product status
+    %% covers 22
+    TM->>OD: delete delivered order

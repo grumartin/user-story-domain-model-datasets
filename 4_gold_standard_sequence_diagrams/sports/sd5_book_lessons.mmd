@@ -1,0 +1,23 @@
+sequenceDiagram
+    %% SD5 - Book lessons and training sessions
+    %% Stories: 15, 16, 17, 18, 19, 21, 22
+    %% Description: A customer views available lessons and books one, books or cancels lessons and training sessions by calling the gym, and views future and past bookings.
+    actor CP as Customer (person)
+    participant SC as Schedule
+    participant LE as Lesson
+    participant CU as Customer
+    participant BK as Booking
+    participant TS as TrainingSession
+
+    %% covers 15
+    CP->>SC: view available lessons
+    SC->>LE: lessons
+    CP->>CU: book a lesson
+    CU->>BK: booking
+    BK->>LE: booked lesson
+    %% covers 18, 19, 21, 22
+    CP->>CU: book or cancel a lesson or training session by phone
+    CU->>BK: booking
+    BK->>TS: booked training session
+    %% covers 16, 17
+    CP->>CU: view future and past bookings

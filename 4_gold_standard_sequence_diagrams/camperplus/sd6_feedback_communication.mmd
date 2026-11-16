@@ -1,0 +1,25 @@
+sequenceDiagram
+    %% SD6 - Exchange feedback and messages with parents
+    %% Stories: 14, 17, 22, 41, 45
+    %% Description: Parents submit feedback and concerns, receive bi-weekly feedback and notifications, message counselors and contact the staff in an emergency.
+    actor PA as Parent
+    actor AD as Camp administrator
+    participant GD as Guardian
+    participant FB as Feedback
+    participant CA as Camper
+    participant CS as Counselor
+    participant CW as CampWorker
+
+    %% covers 14
+    PA->>GD: submit feedback and concerns
+    GD->>FB: parent feedback
+    %% covers 17
+    AD->>CA: give bi-weekly feedback on the camper
+    CA->>FB: camper feedback
+    FB->>GD: notify of feedback
+    %% covers 22
+    AD->>GD: notify all parents at once
+    %% covers 41
+    PA->>CS: message counselors
+    %% covers 45
+    PA->>CW: contact staff in an emergency

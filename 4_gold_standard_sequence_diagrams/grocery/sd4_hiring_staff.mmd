@@ -1,0 +1,26 @@
+sequenceDiagram
+    %% SD4 - Hire and review staff
+    %% Stories: 27, 28, 29, 30, 31, 32, 33
+    %% Description: The manager hires new employees, an applicant registers an account and the manager is notified. The manager reviews employees, their contracts and certificates.
+    actor MP as Manager (person)
+    actor AP as Applicant
+    participant MG as Manager
+    participant E as Employee
+    participant CT as Contract
+    participant CF as Certificate
+
+    %% covers 27
+    MP->>MG: hire new employee
+    MG->>E: new employee
+    %% covers 31
+    AP->>E: register account
+    %% covers 28
+    E->>MG: notify of completed hiring
+    %% covers 29, 30
+    MP->>MG: view active and absent employees
+    MG->>E: employees
+    %% covers 32, 33
+    MP->>MG: view contracts and certificates
+    MG->>E: employee
+    E->>CT: contracts
+    E->>CF: certificates

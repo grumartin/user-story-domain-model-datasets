@@ -1,27 +1,22 @@
 sequenceDiagram
     %% SD6 - Resell a ticket
     %% Stories: 13, 35, 36, 37, 38, 39, 41, 42, 43, 44, 45
-    %% Description: A reseller saves an IBAN and uploads a digital ticket from the event page; the platform validates it and the minimum price; once a buyer purchases it, the reseller is paid minus a 3% fee.
+    %% Description: A reseller saves bank account details, uploads a digital ticket from the event page and offers it at a price. The ticket is validated against its event, and a service fee is kept.
     actor RP as Reseller (person)
     participant RS as Reseller
     participant TI as Ticket
     participant EV as Event
-    participant ORD as Order
 
-    RP->>RS: save IBAN in the profile [45]
-    RP->>RS: sell a ticket from the event page [13, 41]
-    RS->>TI: upload(file) [42]
-    Note over RS,TI: only digital tickets can be resold [36]
-    TI->>EV: assignTo(event)
-    TI->>TI: validate() [37, 39]
-    RP->>RS: set price and short description [43, 44]
-    alt valid ticket and price at least 0.05 EUR [35]
-        RS->>TI: offer(price, description)
-        TI-->>RP: ticket listed on the event page
-    else invalid ticket or price too low
-        TI-->>RP: listing rejected
-    end
-    Note over RS,ORD: a buyer purchases the ticket as in SD5
-    ORD->>TI: markSold()
-    TI->>RS: sold(price)
-    Note over RS,TI: payout to the IBAN is the price minus a 3% service fee [38]
+    %% covers 45
+    RP->>RS: save bank account details
+    %% covers 13, 41
+    RP->>RS: sell a ticket from the event page
+    %% covers 36, 42
+    RS->>TI: digital ticket
+    %% covers 37, 39
+    TI->>EV: event to validate the ticket against
+    %% covers 35, 43, 44
+    RP->>RS: set price and description
+    RS->>TI: ticket for sale
+    %% covers 38
+    Note over RS,TI: a 3% service fee is deducted from the price

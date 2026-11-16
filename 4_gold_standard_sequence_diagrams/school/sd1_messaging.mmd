@@ -1,0 +1,36 @@
+sequenceDiagram
+    %% SD1 - Send messages
+    %% Stories: 1, 3, 6, 7, 12, 27, 28, 34, 48, 53, 57
+    %% Description: Guardians, students, teachers and administrators send direct messages, administrators also broadcasts, and each recipient is notified of a new message.
+    actor GP as Guardian (person)
+    actor SP as Student (person)
+    actor TP as Teacher (person)
+    actor AP as Administrator (person)
+    participant GU as Guardian
+    participant ME as Message
+    participant ST as Student
+    participant TE as Teacher
+    participant AD as Administrator
+    participant MN as Mentor
+
+    %% covers 1
+    GP->>GU: message teacher, mentor or administrator
+    GU->>ME: message
+    %% covers 6, 7
+    SP->>ST: message teacher or mentor
+    ST->>ME: message
+    %% covers 27, 28
+    TP->>TE: message student
+    TE->>ME: message
+    %% covers 48, 57
+    AP->>AD: send direct or broadcast message
+    AD->>ME: message
+    ME->>MN: message for the mentor
+    %% covers 3
+    ME->>GU: notify of new message
+    %% covers 12
+    ME->>ST: notify of new message
+    %% covers 34
+    ME->>TE: notify of new message
+    %% covers 53
+    ME->>AD: notify of new message

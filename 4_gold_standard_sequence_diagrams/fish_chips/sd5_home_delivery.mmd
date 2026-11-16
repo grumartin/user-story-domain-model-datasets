@@ -1,0 +1,19 @@
+sequenceDiagram
+    %% SD5 - Deliver an order to the customer's home
+    %% Stories: 46, 47, 48, 49, 50
+    %% Description: The home delivery person gets the delivery address early and a ticket with address, price and phone number. The owner records the cash received by delivery people.
+    actor HD as Home delivery person
+    actor OW as Restaurant owner
+    participant OD as Order
+    participant DP as DeliveryPerson
+    participant CA as Cash
+
+    %% covers 48
+    HD->>OD: get delivery address early
+    %% covers 47, 49, 50
+    HD->>OD: get delivery ticket
+    OD->>DP: delivery person
+    %% covers 46
+    OW->>DP: record cash received per day
+    DP->>CA: cash received
+    DP->>OD: delivered orders

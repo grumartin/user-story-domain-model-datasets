@@ -1,0 +1,25 @@
+sequenceDiagram
+    %% SD5 - Exchange messages
+    %% Stories: 34, 35, 36, 37, 38
+    %% Description: Employees message the management and colleagues, the manager messages one employee or many, and employees read their inbox.
+    actor EP as Employee (person)
+    actor MP as Manager (person)
+    participant E as Employee
+    participant ME as Message
+    participant MG as Manager
+
+    %% covers 34
+    EP->>E: message the management
+    E->>ME: message
+    ME->>MG: to the manager
+    %% covers 35, 37
+    MP->>MG: message one or many employees
+    MG->>ME: message
+    ME->>E: to the employee
+    %% covers 36
+    EP->>E: message a colleague
+    E->>ME: message
+    ME->>E: to the colleague
+    %% covers 38
+    EP->>E: view inbox
+    E->>ME: received messages

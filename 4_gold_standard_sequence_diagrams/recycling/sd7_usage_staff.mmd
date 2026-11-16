@@ -1,0 +1,30 @@
+sequenceDiagram
+    %% SD7 - Review usage and staff information
+    %% Stories: 26, 30, 44, 46, 50
+    %% Description: Superusers and facility representatives view user statistics for their center, an admin handles user activities and views a usage dashboard, and HR views employee information.
+    actor SU as Superuser
+    actor RR as Facility representative
+    actor AD as Admin
+    actor HR as HR employee
+    participant RF as RecyclingFacility
+    participant SC as Schedule
+    participant U as User
+    participant WT as WasteType
+    participant AC as Activity
+    participant EM as Employee
+
+    %% covers 44
+    SU->>RF: view user stats and their waste
+    %% covers 50
+    RR->>RF: view user stats and schedules
+    RF->>SC: schedule
+    SC->>U: users planning drop-offs
+    RF->>WT: waste types
+    %% covers 30
+    AD->>AC: handle users' activities
+    AC->>U: user of the activity
+    AC->>WT: recycled waste type
+    %% covers 46
+    AD->>AC: view usage dashboard
+    %% covers 26
+    HR->>EM: view information of all employees

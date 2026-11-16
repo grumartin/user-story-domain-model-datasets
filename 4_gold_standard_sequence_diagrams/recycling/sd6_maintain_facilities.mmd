@@ -1,0 +1,21 @@
+sequenceDiagram
+    %% SD6 - Maintain facility information
+    %% Stories: 16, 40, 42, 43, 47, 49
+    %% Description: An admin onboards recycling centers and adds or removes their information. Superusers and facility representatives keep it up to date, and the admin sends updates to the facilities.
+    actor AD as Admin
+    actor SU as Superuser
+    actor RR as Facility representative
+    participant RF as RecyclingFacility
+    participant WT as WasteType
+
+    %% covers 16, 40, 42
+    AD->>RF: onboard center and add its information
+    %% covers 43
+    SU->>RF: update center information
+    %% covers 49
+    RR->>RF: update information and accepted materials
+    RF->>WT: accepted waste types
+    %% covers 16
+    AD->>RF: remove outdated information
+    %% covers 47
+    AD->>RF: send updates to the facility

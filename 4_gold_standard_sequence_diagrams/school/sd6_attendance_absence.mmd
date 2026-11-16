@@ -1,0 +1,23 @@
+sequenceDiagram
+    %% SD6 - Record attendance and absences
+    %% Stories: 2, 38, 54, 56
+    %% Description: A guardian reports a child absent and the administrator is notified of the absence form. An administrator registers absences, and a teacher records the attendance of a class.
+    actor GP as Guardian (person)
+    actor AP as Administrator (person)
+    actor TP as Teacher (person)
+    participant GU as Guardian
+    participant ST as Student
+    participant ME as Message
+    participant AD as Administrator
+    participant AT as Attendance
+
+    %% covers 2
+    GP->>GU: report child absent
+    GU->>ST: absent child
+    GU->>ME: absence form
+    %% covers 54
+    ME->>AD: notify of absence form
+    %% covers 56
+    AP->>AT: register absence
+    %% covers 38
+    TP->>AT: record class attendance

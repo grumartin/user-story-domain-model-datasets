@@ -1,0 +1,16 @@
+sequenceDiagram
+    %% SD7 - Handle no-shows
+    %% Stories: 42, 43, 44, 45, 46
+    %% Description: An admin sees missed bookings and how often a customer did not show up. The customer is notified, and repeated no-shows are fined.
+    actor AD as Admin
+    participant BK as Booking
+    participant CU as Customer
+
+    %% covers 43
+    AD->>BK: see missed bookings
+    %% covers 42
+    BK->>CU: notify of missed session
+    %% covers 44
+    AD->>CU: see number of no-shows
+    %% covers 45, 46
+    AD->>CU: fine repeated no-shows

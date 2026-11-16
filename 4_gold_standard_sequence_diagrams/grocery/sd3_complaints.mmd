@@ -1,0 +1,25 @@
+sequenceDiagram
+    %% SD3 - File and handle a complaint
+    %% Stories: 17, 18, 19, 20, 21, 22, 23, 24, 25, 26
+    %% Description: Employees and managers file complaints about the workplace. Office employees and managers view them, an office employee categorizes, prioritizes and responds, and the employee is notified.
+    actor EP as Employee (person)
+    actor MP as Manager (person)
+    actor OE as Office employee
+    participant CM as Complaint
+    participant MG as Manager
+    participant E as Employee
+
+    %% covers 17, 18, 20
+    EP->>CM: file complaint about the workplace
+    %% covers 19, 22
+    MP->>MG: file complaint and view all complaints
+    MG->>CM: complaints
+    %% covers 21
+    OE->>CM: view all complaints
+    %% covers 24, 25
+    OE->>CM: categorize and prioritize
+    %% covers 23
+    OE->>CM: respond to complaint
+    CM->>MG: handled complaint
+    %% covers 26
+    MG->>E: notify employee

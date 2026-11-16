@@ -1,0 +1,23 @@
+sequenceDiagram
+    %% SD1 - Find recycling facilities
+    %% Stories: 1, 2, 3, 4, 6, 14, 36, 48
+    %% Description: A user finds nearby facilities by zip code and on a map, narrows them by waste type and opening hours, and opens an address in Google Maps.
+    actor UP as User (person)
+    participant RF as RecyclingFacility
+    participant WT as WasteType
+    participant SC as Schedule
+
+    %% covers 2, 3, 14
+    UP->>RF: find facilities by zip code
+    %% covers 36
+    UP->>RF: view facilities on a map
+    %% covers 6
+    UP->>RF: select waste types
+    RF->>WT: accepted waste types
+    %% covers 4
+    UP->>RF: get opening hours
+    RF->>SC: opening hours
+    %% covers 48
+    UP->>RF: see environment-friendly facilities
+    %% covers 1
+    UP->>RF: get directions to a facility

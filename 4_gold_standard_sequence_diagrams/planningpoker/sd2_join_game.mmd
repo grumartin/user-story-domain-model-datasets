@@ -1,15 +1,12 @@
 sequenceDiagram
     %% SD2 - Join a game
-    %% Stories: 28, 29
-    %% Description: An estimator opens the invitation URL and joins with a name, unless 15 estimators have already joined.
+    %% Stories: 29
+    %% Description: An estimator joins the game through the invitation URL by entering a name.
+    %% direct EP->G: joining the game creates the estimator
     actor EP as Estimator (person)
     participant G as Game
     participant E as Estimator
 
-    EP->>G: open invitation URL and enter name [29]
-    alt fewer than 15 estimators have joined [28]
-        G->>E: create(name)
-        G-->>EP: game view with the current item
-    else game is full
-        G-->>EP: cannot join, the game is full
-    end
+    %% covers 29
+    EP->>G: join the game
+    G->>E: new estimator

@@ -1,29 +1,33 @@
 sequenceDiagram
     %% SD5 - Buy tickets
     %% Stories: 12, 14, 15, 16, 17, 20, 21, 22, 23, 24, 25, 26
-    %% Description: From the event page a visitor picks ticket types and seats on the venue map, puts several tickets in the cart, checks out as a user or as a guest, and pays.
+    %% Description: A visitor chooses ticket types and seats on the event page, puts tickets in the cart, checks out as a user or as a guest, and pays.
     actor VI as Visitor
     participant EV as Event
-    participant VE as Venue
     participant TI as Ticket
+    participant VE as Venue
     participant ORD as Order
     participant U as User
     participant PA as Payment
 
-    VI->>EV: buy tickets on the event page [12]
-    EV->>TI: getAvailableTickets()
-    EV->>VE: getSeatMap()
-    EV-->>VI: ticket types and free seats on the venue map [21, 22, 23]
-    VI->>ORD: add tickets for several people to the cart [20, 24]
-    ORD->>TI: reserve()
-    alt logged-in user
-        ORD->>U: getSavedDetails()
-    else guest checkout [14, 15, 16, 17]
+    %% covers 12
+    VI->>EV: buy tickets on the event page
+    %% covers 21, 23
+    EV->>TI: ticket types and available seats
+    %% covers 22
+    EV->>VE: seat map
+    %% covers 20, 24
+    VI->>ORD: add tickets to the cart
+    ORD->>TI: reserved tickets
+    alt logged in
+        ORD->>U: saved details
+    else guest
+        %% covers 14, 15, 16, 17
         VI->>ORD: enter name and email only
     end
-    ORD-->>VI: order summary [25]
-    ORD->>PA: getPaymentMethods()
-    PA-->>VI: payment methods [26]
-    VI->>PA: pay with the chosen method
-    PA->>ORD: confirm()
-    ORD->>TI: markSold()
+    %% covers 25
+    VI->>ORD: review order summary
+    %% covers 26
+    ORD->>PA: payment methods
+    %% covers 26
+    VI->>PA: pay

@@ -1,0 +1,24 @@
+sequenceDiagram
+    %% SD4 - Manage the user account
+    %% Stories: 7, 15, 18, 21, 28, 38
+    %% Description: A user creates an account, links an email account, saves favorite donation centers, and looks up rewards and the transaction history. An admin can block a spamming user.
+    actor UP as User (person)
+    actor AD as Admin
+    participant U as User
+    participant RW as Reward
+    participant AC as Activity
+
+    %% covers 15
+    UP->>U: create account
+    %% covers 38
+    UP->>U: link email for password recovery
+    %% covers 7
+    UP->>U: add favorite donation centers
+    %% covers 28
+    UP->>U: receive rewards
+    U->>RW: rewards
+    %% covers 18
+    UP->>U: check transaction history
+    U->>AC: past activities
+    %% covers 21
+    AD->>U: block spamming user

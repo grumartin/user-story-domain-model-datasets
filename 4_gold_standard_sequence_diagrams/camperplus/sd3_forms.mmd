@@ -1,0 +1,23 @@
+sequenceDiagram
+    %% SD3 - Handle forms
+    %% Stories: 4, 5, 19, 21, 36, 38, 42
+    %% Description: The camp administrator creates registration forms and uploads consent forms. Parents sign and submit forms and see what they submitted. The administrator tracks submissions and views medical forms.
+    actor AD as Camp administrator
+    actor PA as Parent
+    participant FO as Form
+    participant GD as Guardian
+    participant CA as Camper
+
+    %% covers 4, 19
+    AD->>FO: create registration forms and upload consent forms
+    %% covers 38, 42
+    PA->>GD: sign and submit forms online
+    GD->>FO: submitted forms
+    FO->>CA: camper of the form
+    %% covers 36
+    PA->>GD: see submitted consent forms
+    %% covers 5
+    AD->>CA: track submitted forms per camper
+    CA->>FO: submitted forms
+    %% covers 21
+    AD->>FO: view medical forms

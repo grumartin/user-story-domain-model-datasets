@@ -1,0 +1,17 @@
+sequenceDiagram
+    %% SD6 - Manage the personal account
+    %% Stories: 40, 43, 47, 48
+    %% Description: An employee changes personal information, chooses the notification channel, resets the password and views the contract.
+    actor EP as Employee (person)
+    participant E as Employee
+    participant CT as Contract
+
+    %% covers 47
+    EP->>E: change personal information
+    %% covers 43
+    EP->>E: choose notification channel
+    %% covers 40
+    EP->>E: reset password
+    %% covers 48
+    EP->>E: view contract
+    E->>CT: contract

@@ -1,0 +1,25 @@
+sequenceDiagram
+    %% SD7 - Record attendance and behaviour
+    %% Stories: 8, 23, 51, 55
+    %% Description: Counselors and the camp administrator record attendance. A camp worker reports inappropriate behaviour, and the administrator can suspend the camper.
+    actor CP as Counselor (person)
+    actor AD as Camp administrator
+    actor WP as Camp worker (person)
+    participant CS as Counselor
+    participant GR as Group
+    participant CA as Camper
+    participant AT as Attendance
+    participant BH as Behavior
+
+    %% covers 55
+    CP->>CS: take attendance of assigned kids
+    CS->>GR: assigned group
+    GR->>CA: campers
+    CA->>AT: attendance
+    %% covers 23
+    AD->>AT: log daily attendance
+    %% covers 51
+    WP->>BH: report inappropriate behaviour
+    BH->>CA: camper concerned
+    %% covers 8
+    AD->>CA: suspend camper

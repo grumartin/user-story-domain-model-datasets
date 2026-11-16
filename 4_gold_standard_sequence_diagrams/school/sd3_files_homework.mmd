@@ -1,0 +1,34 @@
+sequenceDiagram
+    %% SD3 - Share files and hand in homework
+    %% Stories: 5, 8, 10, 11, 13, 18, 32, 44
+    %% Description: A teacher uploads files for classes and students are notified. Students open the files and modules of their class and hand in homework, and the teacher is notified.
+    actor TP as Teacher (person)
+    actor SP as Student (person)
+    participant TE as Teacher
+    participant CL as Class
+    participant DM as DigitalLearningModule
+    participant MA as Material
+    participant ST as Student
+    participant SU as Submission
+    participant ASG as Assignment
+
+    %% covers 44
+    TP->>TE: upload files for classes
+    TE->>CL: classes
+    CL->>DM: class modules
+    DM->>MA: files
+    %% covers 32
+    CL->>TE: notify of completed upload
+    %% covers 13
+    CL->>ST: notify of new files
+    %% covers 5, 10
+    SP->>ST: open files and modules of the class
+    %% covers 8
+    SP->>ST: hand in homework
+    ST->>SU: submission
+    SU->>ASG: assignment
+    ASG->>CL: class of the assignment
+    %% covers 18
+    CL->>TE: notify of new submission
+    %% covers 11
+    CL->>ST: remind of assignment due soon

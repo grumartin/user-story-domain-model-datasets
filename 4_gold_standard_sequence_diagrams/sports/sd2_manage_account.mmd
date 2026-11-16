@@ -1,0 +1,27 @@
+sequenceDiagram
+    %% SD2 - Manage account and family membership
+    %% Stories: 9, 10, 11, 12, 13, 14, 51, 52, 53, 54, 58, 59
+    %% Description: A customer views and changes personal, payment and notification settings, and manages the persons on a family membership.
+    actor CP as Customer (person)
+    participant CU as Customer
+    participant PI as PaymentInformation
+    participant FM as FamilyMembership
+    participant PE as Person
+
+    %% covers 58, 59
+    CP->>CU: view personal and membership information
+    %% covers 10
+    CP->>CU: change personal details
+    %% covers 11
+    CP->>CU: update payment information
+    CU->>PI: payment information
+    %% covers 51, 52, 53, 54
+    CP->>CU: set notification preferences
+    %% covers 9
+    CP->>CU: reset password
+    %% covers 12
+    CP->>CU: see who uses the family membership
+    %% covers 13, 14
+    CP->>CU: add or remove a person
+    CU->>FM: family membership
+    FM->>PE: person

@@ -12,7 +12,7 @@ Curated thesis dataset from **“Leveraging machines to derive domain models fro
 1_user_stories/                    # Nine project text files, UTF-8
 2_gold_standard_domain_models/     # Nine Mermaid class diagrams (.mmd) only
 3_visualizations/                  # Rendered SVG diagrams and visual galleries
-4_gold_standard_sequence_diagrams/ # Gold sequence diagrams (.mmd) for Planningpoker and Ticket (addition, see below)
+4_gold_standard_sequence_diagrams/ # Gold sequence diagrams (.mmd) for all nine projects (addition, see below)
 scripts/render_models.py           # Regenerate or validate the diagrams
 scripts/LICENSE                    # MIT license for scripts
 CITATION.cff                      # Original paper as the preferred citation
@@ -36,7 +36,7 @@ Open `.mmd` files in a Mermaid-compatible viewer, or paste their contents into a
 
 ## Gold-standard sequence diagrams (addition)
 
-`4_gold_standard_sequence_diagrams/` adds 14 reference UML sequence diagrams, seven each for Planningpoker and Ticket. They were written from the user stories and the gold domain models as a gold standard for evaluating generated sequence diagrams. **They are not part of the original dataset by Bragilovski et al.** Their participants are gold classes, every message between two objects follows a gold association, and each diagram lists the user stories it covers. The [folder README](4_gold_standard_sequence_diagrams/README.md) describes the conventions, coverage and modeling decisions; the [sequence-diagram gallery](3_visualizations/sequence_diagrams/README.md) shows them rendered.
+`4_gold_standard_sequence_diagrams/` adds 64 reference UML sequence diagrams, six to nine for each of the nine projects. They are simple, analysis-level diagrams: plain-language messages, no operations or return values. They were written from the user stories and the gold domain models as a gold standard for evaluating generated sequence diagrams. **They are not part of the original dataset by Bragilovski et al.** Their participants are gold classes, every message between two objects follows a gold association, and each diagram lists the user stories it covers. The [folder README](4_gold_standard_sequence_diagrams/README.md) describes the conventions, the considerations and issues in creating them, coverage and modeling decisions; the [sequence-diagram gallery](3_visualizations/sequence_diagrams/README.md) shows them rendered.
 
 ## Visual representations
 

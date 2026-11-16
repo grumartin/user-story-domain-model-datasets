@@ -1,0 +1,24 @@
+sequenceDiagram
+    %% SD8 - Publish and change timetables
+    %% Stories: 9, 14, 19, 49, 55, 59
+    %% Description: An administrator uploads schedules, assigns them to classes and teachers and registers changes. Students view their timetable, and students and teachers are notified of changes.
+    actor AP as Administrator (person)
+    actor SP as Student (person)
+    participant TT as Timetable
+    participant ST as Student
+    participant TE as Teacher
+
+    %% covers 59
+    AP->>TT: upload schedules
+    %% covers 49
+    AP->>TT: assign schedules to classes and teachers
+    TT->>ST: student timetable
+    TT->>TE: teacher timetable
+    %% covers 9
+    SP->>ST: view timetable
+    %% covers 55
+    AP->>TT: register schedule change
+    %% covers 14
+    TT->>ST: notify of change
+    %% covers 19
+    TT->>TE: notify of change

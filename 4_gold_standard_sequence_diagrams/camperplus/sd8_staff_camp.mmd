@@ -1,0 +1,34 @@
+sequenceDiagram
+    %% SD8 - Manage staff, rules and upkeep
+    %% Stories: 10, 11, 12, 49, 50, 52, 53, 54
+    %% Description: The camp administrator assigns positions, warns camp workers and maintains the rules. Camp workers see the campers in their charge, submit reports, and report missing supplies and repairs.
+    actor AD as Camp administrator
+    actor WP as Camp worker (person)
+    participant CM as Camp
+    participant CW as CampWorker
+    participant PO as Position
+    participant RU as Rule
+    participant AC as Activity
+    participant SU as Supply
+    participant RP as Repair
+
+    %% covers 10
+    AD->>CM: assign positions to staff
+    CM->>CW: camp workers
+    CW->>PO: position
+    %% covers 11
+    AD->>CW: warn camp worker
+    %% covers 12
+    AD->>CM: create or modify rules
+    CM->>RU: rules
+    %% covers 49, 54
+    WP->>CW: see campers in charge and where
+    CW->>PO: position
+    PO->>AC: activities in charge
+    %% covers 50
+    WP->>CW: submit completion report
+    %% covers 52
+    WP->>SU: report missing supplies
+    SU->>CM: camp short of supplies
+    %% covers 53
+    WP->>RP: report necessary repairs
